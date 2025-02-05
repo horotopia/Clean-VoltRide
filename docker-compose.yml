@@ -1,0 +1,205 @@
+services:
+  authCommand:
+    container_name: authCommand
+    build:
+      context: ./apis/authCommand
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5000:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  authQuery:
+    container_name: authQuery
+    build:
+      context: ./apis/authQuery
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5001:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./apis/gateway
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5002:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+  
+  MaintenanceCommand:
+    container_name: MaintenanceCommand
+    build:
+      context: ./apis/MaintenanceCommand
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5003:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+  
+  MaintenanceQuery:
+    container_name: MaintenanceQuery
+    build:
+      context: ./apis/MaintenanceQuery
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5004:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  ReservationCommand:
+    container_name: ReservationCommand
+    build:
+      context: ./apis/ReservationCommand
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5005:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  ReservationQuery:
+    container_name: ReservationQuery
+    build:
+      context: ./apis/ReservationQuery
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5006:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  stockCommand:
+    container_name: stockCommand
+    build:
+      context: ./apis/stockCommand
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5007:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  stockQuery:
+    container_name: stockQuery
+    build:
+      context: ./apis/stockQuery
+      target: development
+    env_file: ./api/.env
+    volumes:
+      - ./api:/api
+    ports:
+      - 5008:5000
+      - 8081:80
+      - 81:81
+    depends_on:
+      - mongodb
+    networks:
+      - mevn
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    env_file: ./mongo/.env
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo/initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo_db:/data/db
+    networks:
+      - mevn
+
+  mongo-express:
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: mongo-express
+    restart: always
+    env_file: ./mongo/.env
+    ports:
+      - 8082:8081
+    networks:
+      - mevn
+    depends_on:
+      - mongodb
+
+  pgsql:
+    image: postgres:13.4
+    container_name: pgsql
+    env_file: ./pgsql/.env
+    ports:
+      - 5432:5432
+    volumes:
+      - pgsql:/var/lib/postgresql/data
+    networks:
+      - mevn
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    env_file: ./pgsql/.env
+    ports:
+      - 8083:81
+    networks:
+      - mevn
+    depends_on:
+      - pgsql
+
+networks:
+  mevn:
+
+volumes:
+  mongo_db:
