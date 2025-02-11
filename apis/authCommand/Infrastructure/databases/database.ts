@@ -3,9 +3,9 @@ import { MongooseService } from "./mongoose.service";
 
 type DBType = 'pgsql' | 'mongo';
 
-const connectDB = async (DBType: DBType): Promise<SequelizeService|MongooseService> => {
+const connectDB = async (DBType: DBType): Promise<SequelizeService | MongooseService | undefined> => {
   if (DBType === "pgsql") {
-    return await SequelizeService.get();;
+    return await SequelizeService.get();
   };
   if (DBType === "mongo") {
     return await MongooseService.get();

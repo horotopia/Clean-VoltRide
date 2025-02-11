@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { Mongoose, connect } from "mongoose";
-import { UserService } from "../UseCases/mongoose/user.service";
+import { UserService } from "../commands/mongoose/user.service";
 
 config();
 console.log("uri", process.env.MONGO_URI);
