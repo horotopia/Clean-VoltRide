@@ -1,9 +1,10 @@
 import { config } from "dotenv";
 import { Sequelize } from "sequelize";
 import { UserService } from "./user.service";
+import { Logger } from "../config/logger";
 
 config();
-console.log("uri", process.env.POSTGRES_URI);
+const logger = Logger.get();
 
 export class SequelizeService {
   private static instance?: SequelizeService;
@@ -13,6 +14,7 @@ export class SequelizeService {
 
   private constructor(sequelize: Sequelize) {
     this.sequelize = sequelize;
+
     this.userService = new UserService(this);
   }
 
@@ -20,12 +22,12 @@ export class SequelizeService {
     if (this.instance !== undefined) {
       return this.instance;
     }
-    const connection = await this.openConnection();
+    const connection = await this.connect();
     this.instance = new SequelizeService(connection);
     return this.instance;
   }
 
-  private static async openConnection(): Promise<Sequelize> {
+  private static async connect(): Promise<Sequelize> {
     const sequelize = new Sequelize(process.env.POSTGRES_URI as string, {
       dialect: "postgres",
       logging: false, // Désactiver les logs SQL
@@ -33,9 +35,8 @@ export class SequelizeService {
 
     try {
       await sequelize.authenticate();
-      console.log("✅ Connection à PostgreSQL réussie !");
     } catch (error) {
-      console.error("❌ Impossible de se connecter à PostgreSQL :", error);
+      logger.error( new Error("Impossible de se connecter à PostgreSQL :", error));
     }
 
     return sequelize;

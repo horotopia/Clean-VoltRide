@@ -1,6 +1,6 @@
 import cors from 'cors';
 import { Application } from 'express';
-import { Logger } from '../Infrastructure/libs/logger';
+import { Logger } from './logger';
 
 const logger = Logger.get();
 
