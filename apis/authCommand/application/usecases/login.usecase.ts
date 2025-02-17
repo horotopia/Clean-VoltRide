@@ -1,6 +1,7 @@
 import { UserRepositoryInterface } from "../ports"
 import { AuthServiceInterface } from "../ports";
 import { LoginUserDTO } from "../dtos";
+import { TokenHelper } from "../../shared/helpers/token.helper";
 
 export class LoginUseCase {
 
@@ -14,7 +15,7 @@ export class LoginUseCase {
     }
 
     // Récupère l’utilisateur via le repository
-    const user = await this.userRepository.search(dto.email);
+    const user = await this.userRepository.findByEmail(dto.email);
     if (!user) {
       throw new Error("Utilisateur non trouvé");
     }

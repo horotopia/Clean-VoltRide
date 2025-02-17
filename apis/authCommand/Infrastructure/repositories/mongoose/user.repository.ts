@@ -15,8 +15,12 @@ export class UserRepository implements UserRepositoryInterface {
     this.model = mongoose.model("User",userSchema);
   }
 
+  create(user: User): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const userData = await this.model.findOne({ email });
-    return userData ? new User(userData.id, userData.email, userData.password, userData.role) : null;
+    return userData ? new User(userData.email, userData.password, userData.role, userData.id) : null;
   }
 }

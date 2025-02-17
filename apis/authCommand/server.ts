@@ -7,10 +7,7 @@ import { config } from "dotenv";
 import { Logger } from "./Infrastructure/libs/logger";
 import connectDB from "./Application/databases/database";
 import errorHandler from "./middlewares/errorHandler";
-import {
-  AuthController,
-  UserController,
-} from "./controllers";
+import authRoutes from "./interface/routes/auth.routes";
 
 config();
 const app: Express = express();
@@ -29,16 +26,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
   next();
 });
+
 app.get("/", (req, res) => {
   res.send("Hello, TypeScript Node Express!");
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const authController = new AuthController();
-app.use("/auth", authController.buildRouter());
-const userController = new UserController();
-app.use("/user", userController.buildRouter());
+app.use("/auth", authRoutes);
 
 app.use(errorHandler());
 

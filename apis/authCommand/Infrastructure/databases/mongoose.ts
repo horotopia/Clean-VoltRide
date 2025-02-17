@@ -8,12 +8,18 @@ export class MongooseService implements Adapter<MongooseService, Mongoose> {
   private static instance?: MongooseService;
 
   readonly mongoose: Mongoose;
-  readonly UserRepository: UserRepository;
+  readonly userRepository: UserRepository;
 
   private constructor(mongoose: Mongoose) {
     this.mongoose = mongoose;
 
-    this.UserRepository = new UserRepository(this);
+    this.userRepository = new UserRepository(this);
+  }
+  get(): Promise<MongooseService> {
+    return MongooseService.get();
+  }
+  connect(): Promise<typeof import("mongoose")> {
+    throw new Error("Method not implemented.");
   }
 
   public static async get(): Promise<MongooseService> {
