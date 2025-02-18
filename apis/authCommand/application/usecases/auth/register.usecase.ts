@@ -1,6 +1,6 @@
-import { User } from "../../domain/entities";
-import { RegisterUserDTO } from "../dtos/register.user.dto";
-import { AuthServiceInterface, UserRepositoryInterface } from "../ports";
+import { User } from "../../../domain/entities";
+import { RegisterUserDTO } from "../../dtos/register.user.dto";
+import { AuthServiceInterface, UserRepositoryInterface } from "../../ports";
 
 
 export class RegisterUseCase {

@@ -1,7 +1,7 @@
-import { UserRepositoryInterface } from "../ports"
-import { AuthServiceInterface } from "../ports";
-import { LoginUserDTO } from "../dtos";
-import { TokenHelper } from "../../shared/helpers/token.helper";
+import { UserRepositoryInterface } from "../../ports"
+import { AuthServiceInterface } from "../../ports";
+import { LoginUserDTO } from "../../dtos";
+import { TokenHelper } from "../../../shared/helpers/token.helper";
 
 export class LoginUseCase {
 

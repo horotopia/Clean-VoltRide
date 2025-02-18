@@ -10,7 +10,12 @@ export class User implements UserInterface {
   public password: string;
   public role: Role;
   
-  constructor(email: string, password: string, role: Role = Role.Customer , id: string = uuidv4()) {
+  constructor(
+    email: string, 
+    password: string, 
+    role: Role = Role.Customer, 
+    id: string = uuidv4()
+  ) {
     this.id = id;
     this.email = email;
     this.password = password;
