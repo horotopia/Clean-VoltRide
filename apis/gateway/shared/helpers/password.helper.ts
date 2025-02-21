@@ -1,16 +1,17 @@
-import bcrypt from "bcryptjs";
-import { Logger } from "../../config/logger";
+import bcrypt from 'bcryptjs';
+import { Logger } from '../../config/logger';
+import { PasswordServiceInterface } from '../../application/ports/password.service.interface';
 
 const logger = Logger.get();
+export class PasswordHelper implements PasswordServiceInterface {
 
-export class Bcrypt {
   private saltRounds: number;
 
   constructor(saltRounds: number = 10) {
     this.saltRounds = saltRounds;
   }
 
-  async hashPassword(password: string): Promise<string> {
+  async hash(password: string): Promise<string> {
     try {
       const salt = bcrypt.genSaltSync(this.saltRounds);
       return bcrypt.hashSync(password, salt);
@@ -20,7 +21,7 @@ export class Bcrypt {
     }
   }
 
-  async comparePassword(password: string, hash: string): Promise<boolean> {
+  async compare(password: string, hash: string): Promise<boolean> {
     try {
       return bcrypt.compareSync(password, hash);
     } catch (error) {
