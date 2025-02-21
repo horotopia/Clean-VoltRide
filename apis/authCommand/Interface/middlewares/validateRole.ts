@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { MongooseService } from "../services/mongoose";
 import { Role } from "../models";
+import connectDB from "../../infrastructure/databases/database";
+import { config } from "dotenv";
 
+config();
 const SECRET_KEY: string | undefined = process.env.JWT_SECRET;
 
 const getUser = async (req: Request, res: Response) => {
@@ -21,8 +23,14 @@ const getUser = async (req: Request, res: Response) => {
 
   const decoded = jwt.verify(jwtToken, SECRET_KEY) as jwt.JwtPayload;
 
-  const mongooseService = await MongooseService.get();
-  const user = await mongooseService.userService.findById(decoded.id);
+  const dbType = process.env.DB_TYPE;
+  if (!dbType) {
+    res.status(500);
+    throw new Error("DB_TYPE is not defined");
+  }
+  const database = await connectDB(dbType);
+  const userRepo = database && 'userRepository' in database ? await database.userRepository : null;
+  const user = await userRepo.findById(decoded.id);
   if (!user) {
     res.status(401);
     throw new Error("Authentication failed");

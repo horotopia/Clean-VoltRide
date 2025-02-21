@@ -1,2 +1,2 @@
-export * from "./user.interface";
 export * from "./timestamp.interface";
+export * from "./user.interface";
