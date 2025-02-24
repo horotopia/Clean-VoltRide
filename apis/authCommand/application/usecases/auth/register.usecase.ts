@@ -14,7 +14,7 @@ export class RegisterUseCase {
     this.authService = authService;
   }
 
-  async execute(dto: RegisterUserDTO): Promise<string> {
+  async execute(dto: RegisterUserDTO): Promise<string | Error> {
     // Fail Fast: Vérifie si les données d’entrée sont valides
     if (!dto.email || !dto.password) {
       throw new Error("Email et mot de passe sont requis");
