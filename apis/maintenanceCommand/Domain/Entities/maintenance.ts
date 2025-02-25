@@ -1,9 +1,8 @@
-import { MaintenanceType } from '../enums';
-import { v4 as uuidv4 } from 'uuid';
-import { MaintenanceInterface } from '../interfaces';
+import { MaintenanceType } from "../enums";
+import { v4 as uuidv4 } from "uuid";
+import { MaintenanceInterface } from "../interfaces";
 
 export class Maintenance implements MaintenanceInterface {
-
   public id: string;
   public scooterId: string;
   public technicianId: string;
