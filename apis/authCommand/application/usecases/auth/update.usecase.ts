@@ -1,25 +1,26 @@
 import { AuthServiceInterface, UserRepositoryInterface } from "../../ports";
 import { UpdateUserDTO } from "../../dtos/auth";
+import { BadRequestError } from "../../errors";
 
 export class UpdateUseCase {
   private userRepository: UserRepositoryInterface;
   private authService: AuthServiceInterface;
 
-  constructor(userRepository: UserRepositoryInterface, authService: AuthServiceInterface) {
+  constructor(
+    userRepository: UserRepositoryInterface,
+    authService: AuthServiceInterface,
+  ) {
     this.userRepository = userRepository;
     this.authService = authService;
   }
 
   async execute(dto: UpdateUserDTO): Promise<void> {
     if (!dto.id || !dto.token) {
-      throw new Error("Id is required");
+      throw new BadRequestError();
     }
 
     const token = this.authService.verifyToken(dto.token);
-    if (!token) {
-      throw new Error("Invalid token");
-    }
-    if (token.id !== dto.id) {
+    if (!token || token.id !== dto.id) {
       throw new Error("Invalid token");
     }
 
