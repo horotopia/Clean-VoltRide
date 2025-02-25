@@ -1,7 +1,9 @@
 import cors from 'cors';
 import { Application } from 'express';
 import { Logger } from './logger';
+import { config } from 'dotenv';
 
+config();
 const logger = Logger.get();
 
 const configureCORS = (app: Application) => {

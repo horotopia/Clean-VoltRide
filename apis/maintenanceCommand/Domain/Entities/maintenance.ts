@@ -1,9 +1,8 @@
-import { MaintenanceType } from '../enums';
-import { v4 as uuidv4 } from 'uuid';
-import { MaintenanceInterface } from '../interfaces';
+import { MaintenanceType } from "../enums";
+import { v4 as uuidv4 } from "uuid";
+import { MaintenanceInterface } from "../interfaces";
 
 export class Maintenance implements MaintenanceInterface {
-
   public id: string;
   public scooterId: string;
   public technicianId: string;
@@ -14,6 +13,7 @@ export class Maintenance implements MaintenanceInterface {
 
   constructor(
     scooterId: string,
+    technicianId: string,
     type: MaintenanceType,
     date: Date,
     details: string,
@@ -22,6 +22,7 @@ export class Maintenance implements MaintenanceInterface {
   ) {
     this.id = id;
     this.scooterId = scooterId;
+    this.technicianId = technicianId;
     this.type = type;
     this.date = date;
     this.details = details;
