@@ -38,4 +38,11 @@ export class Incident implements IncidentInterface {
     this.reportedAt = reportedAt;
     this.resolvedAt = resolvedAt;
   }
+
+  public timeToResolve(): number {
+    if (this.resolvedAt) {
+      return this.resolvedAt.getTime() - this.reportedAt.getTime();
+    }
+    return new Date().getTime() - this.reportedAt.getTime();
+  }
 }

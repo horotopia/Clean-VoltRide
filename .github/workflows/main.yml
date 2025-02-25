@@ -1,0 +1,112 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+    name: node_build_job
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Récupère le code de votre repo
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4  
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Move & Install API dependencies
+        run: cd apis/authCommand && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/authCommand && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/authCommand && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/authQuery && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/authQuery && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/authQuery && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/gateway && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/gateway && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/gateway && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/maintenanceCommand && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/maintenanceCommand && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/maintenanceCommand && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/maintenanceQuery && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/maintenanceQuery && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/maintenanceQuery && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/reservationCommand && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/reservationCommand && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/reservationCommand && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/reservationQuery && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/reservationQuery && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/reservationQuery && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/stockCommand && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/stockCommand && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/stockCommand && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install API dependencies
+        run: cd apis/stockQuery && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd apis/stockQuery && npm run build --if-present
+
+      - name: Run tests
+        run: cd apis/stockQuery && npm run test --if-present # Commande pour lancer vos tests Vitest, modifiez selon votre script de test
+
+      - name: Move & Install Client dependencies
+        run: cd client && npm ci # Installe les dépendances du projet
+
+      - name: Build
+        run: cd client && npm run build --if-present

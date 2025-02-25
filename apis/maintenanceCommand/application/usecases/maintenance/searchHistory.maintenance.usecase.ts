@@ -1,10 +1,16 @@
 import { Maintenance } from '../../../domain/entities';
-import { MaintenanceRepository } from '../../ports';
+import { MaintenanceRepositoryInterface } from '../../ports';
 
 export class SearchMaintenanceHistory {
-  constructor(private maintenanceRepo: MaintenanceRepository) {}
+
+  private maintenanceRepo: MaintenanceRepositoryInterface;
+
+  constructor(maintenanceRepo: MaintenanceRepositoryInterface) {
+    this.maintenanceRepo = maintenanceRepo;
+  }
 
   async execute(scooterId: string): Promise<Maintenance[]> {
-    return await this.maintenanceRepo.findByScooterId(scooterId);
+    const maintenances = await this.maintenanceRepo.searchByScooterId(scooterId);
+    return maintenances;
   }
 }
