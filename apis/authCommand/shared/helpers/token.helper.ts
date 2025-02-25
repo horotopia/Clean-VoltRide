@@ -17,7 +17,7 @@ export class TokenHelper implements AuthServiceInterface {
   }
 
   generateToken(user: User): string {
-    return sign({email: user.email, role: user.role}, this.secret, { expiresIn: '1h' });
+    return sign({id: user.id, email: user.email, role: user.role}, this.secret, { expiresIn: '1h' });
   }
 
   verifyToken(token: string): any {
