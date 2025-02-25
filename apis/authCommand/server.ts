@@ -26,13 +26,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello, TypeScript Node Express!");
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello, TypeScript Node Express! Auth Command");
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 app.use(errorHandler());
 
