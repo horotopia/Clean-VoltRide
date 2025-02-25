@@ -1,15 +1,25 @@
-import { MaintenanceRepository } from '../../ports';
-import { Maintenance } from '../../../domain/entities';
-import { ScooterRepository } from '../../ports';
-import { Scooter } from '../../../domain/entities';
+import { Maintenance, Scooter, Warranty } from '../../../domain/entities';
 import { MaintenanceType } from '../../../domain/enums';
+import { BadRequestError } from '../../../../authCommand/application/errors';
+import { MaintenanceRepositoryInterface, ScooterRepositoryInterface } from '../../ports';
+import { CreateMaintenanceDTO } from '../../dtos/maintenance';
 
 export class PlanifierMaintenanceUseCase {
-  constructor(private scooterRepo: ScooterRepository, private maintenanceRepo: MaintenanceRepository) {}
 
-  async execute(scooterId: string): Promise<void> {
-    const scooter = await this.scooterRepo.findById(scooterId);
-    if (!scooter) throw new Error("Scooter introuvable");
+  private scooterRepo: ScooterRepositoryInterface;
+  private maintenanceRepo: MaintenanceRepositoryInterface;
+
+  constructor(scooterRepo: ScooterRepositoryInterface, maintenanceRepo: MaintenanceRepositoryInterface) {
+    this.scooterRepo = scooterRepo;
+    this.maintenanceRepo = maintenanceRepo;
+  }
+
+  async execute(dto: CreateMaintenanceDTO): Promise<void | Error> {
+    if (!dto || !dto.scooterId || !dto.technicianId) {
+      throw new BadRequestError();
+    }
+    const scooter = await this.scooterRepo.findById(dto.scooterId);
+    if (!scooter) throw new BadRequestError();
 
     let needsMaintenance = false;
     let maintenanceType = MaintenanceType.PREVENT;
@@ -28,10 +38,12 @@ export class PlanifierMaintenanceUseCase {
     if (needsMaintenance) {
       const maintenance = new Maintenance(
         scooter.id,
+        dto.technicianId,
         maintenanceType,
+        true,
         new Date(),
         details,
-        0 // Coût inconnu pour l’instant
+        0,
       );
       await this.maintenanceRepo.save(maintenance);
     }

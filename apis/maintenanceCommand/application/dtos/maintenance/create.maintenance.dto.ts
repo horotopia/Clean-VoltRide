@@ -1,4 +1,4 @@
-import { MaintenanceType } from "../../../domain/enums";
+import { MaintenanceType } from '../../../domain/enums';
 
 export interface CreateMaintenanceDTO {
   scooterId: string;

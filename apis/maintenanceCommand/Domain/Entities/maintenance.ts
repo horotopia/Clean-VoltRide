@@ -7,6 +7,7 @@ export class Maintenance implements MaintenanceInterface {
   public scooterId: string;
   public technicianId: string;
   public type: MaintenanceType;
+  public warranty: boolean;
   public date: Date;
   public details: string;
   public cost: number;
@@ -15,6 +16,7 @@ export class Maintenance implements MaintenanceInterface {
     scooterId: string,
     technicianId: string,
     type: MaintenanceType,
+    warranty: boolean,
     date: Date,
     details: string,
     cost: number,
@@ -24,6 +26,7 @@ export class Maintenance implements MaintenanceInterface {
     this.scooterId = scooterId;
     this.technicianId = technicianId;
     this.type = type;
+    this.warranty = warranty;
     this.date = date;
     this.details = details;
     this.cost = cost;
