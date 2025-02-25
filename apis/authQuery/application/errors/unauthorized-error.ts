@@ -1,6 +1,6 @@
-import { DefaultApplicationError } from './default-application-error';
+import { DefaultApplicationError } from ".";
 
 export class UnauthorizedError extends DefaultApplicationError {
-  name = 'UnauthorizedError';
+  name = "UnauthorizedError";
   statusCode = 401;
 }

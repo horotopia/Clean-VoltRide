@@ -1,10 +1,9 @@
-import bcrypt from 'bcryptjs';
-import { Logger } from '../../config/logger';
-import { PasswordServiceInterface } from '../../application/ports/password.service.interface';
+import bcrypt from "bcrypt";
+import { Logger } from "../../config/logger";
+import { PasswordServiceInterface } from "../../application/ports/password.service.interface";
 
 const logger = Logger.get();
 export class PasswordHelper implements PasswordServiceInterface {
-
   private saltRounds: number;
 
   constructor(saltRounds: number = 10) {

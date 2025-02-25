@@ -1,6 +1,6 @@
-import { DefaultApplicationError } from './default-application-error';
+import { DefaultApplicationError } from ".";
 
 export class SanitizerError extends DefaultApplicationError {
-  name = 'SanitizerError';
+  name = "SanitizerError";
   statusCode = 400;
 }

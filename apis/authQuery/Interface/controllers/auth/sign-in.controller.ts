@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { LoginUseCase } from '../../../application/usecases/auth/login.usecase';
+import { LoginUseCase } from "../../../application/usecases/auth/login.usecase";
 import { config } from "dotenv";
 import { TokenHelper } from "../../../shared/helpers/token.helper";
 import connectDB from "../../../infrastructure/databases/database";
@@ -7,20 +7,9 @@ import { RepositoryError } from "../../../application/errors/repository-error";
 import { BadRequestError } from "../../../application/errors";
 
 config();
-if (!process.env.DB_TYPE) {
-  throw new RepositoryError(); // DB_TYPE environment variable is not defined
-}
-const database = await connectDB(process.env.DB_TYPE);
-const userRepo = database && 'userRepository' in database ? await database.userRepository : null;
-const tokenService = new TokenHelper();
-if (!userRepo) {
-  throw new RepositoryError(); // User repository is not available
-}
-const loginUseCase = new LoginUseCase(userRepo, tokenService);
 
 export class SignInController {
-
-/**
+  /**
    * @swagger
    * /api/auth/login:
    *   post:
@@ -54,8 +43,22 @@ export class SignInController {
    *         description: User not found
    */
 
-  async login(req: Request, res: Response, next: NextFunction) : Promise<Response> {
+  async login(req: Request, res: Response): Promise<Response> {
     try {
+      if (!process.env.DB_TYPE) {
+        throw new RepositoryError(); // DB_TYPE environment variable is not defined
+      }
+      const database = await connectDB(process.env.DB_TYPE);
+      const userRepo =
+        database && "userRepository" in database
+          ? await database.userRepository
+          : null;
+      const tokenService = new TokenHelper();
+      if (!userRepo) {
+        throw new RepositoryError(); // User repository is not available
+      }
+      const loginUseCase = new LoginUseCase(userRepo, tokenService);
+
       if (
         !req.body ||
         typeof req.body.email !== "string" ||
@@ -66,8 +69,7 @@ export class SignInController {
       }
 
       const token = await loginUseCase.execute(req.body);
-      return res.status(201).json({token});
-      
+      return res.status(201).json({ token });
     } catch (error) {
       if (!res.statusCode) {
         res.status(500);
