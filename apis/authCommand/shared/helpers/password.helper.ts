@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { Logger } from '../../config/logger';
 import { PasswordServiceInterface } from '../../application/ports/password.service.interface';
 

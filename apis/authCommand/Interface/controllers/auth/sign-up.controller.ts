@@ -7,16 +7,27 @@ import { RepositoryError } from "../../../application/errors/repository-error";
 import { BadRequestError } from "../../../application/errors";
 
 config();
-if (!process.env.DB_TYPE) {
-  throw new RepositoryError(); // DB_TYPE environment variable is not defined
+
+let registerUseCaseInstance: RegisterUseCase | null = null;
+
+async function getRegisterUseCase(): Promise<RegisterUseCase> {
+  if (registerUseCaseInstance) return registerUseCaseInstance;
+
+  if (!process.env.DB_TYPE) {
+    throw new RepositoryError();
+  }
+
+  const database = await connectDB(process.env.DB_TYPE);
+  const userRepo = database && 'userRepository' in database ? await database.userRepository : null;
+
+  if (!userRepo) {
+    throw new RepositoryError();
+  }
+
+  const tokenService = new TokenHelper();
+  registerUseCaseInstance = new RegisterUseCase(userRepo, tokenService);
+  return registerUseCaseInstance;
 }
-const database = await connectDB(process.env.DB_TYPE);
-const userRepo = database && 'userRepository' in database ? await database.userRepository : null;
-const tokenService = new TokenHelper();
-if (!userRepo) {
-  throw new RepositoryError(); // User repository is not available
-}
-const registerUseCase = new RegisterUseCase(userRepo, tokenService);
 
 export class SignUpController {
   /**
@@ -62,6 +73,7 @@ export class SignUpController {
         throw new BadRequestError(); // Email and password are required
       }
 
+      const registerUseCase = await getRegisterUseCase();
       const token = await registerUseCase.execute(req.body);
       return res.json({token});
 
