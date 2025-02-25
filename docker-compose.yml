@@ -1,57 +1,36 @@
 services:
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - gateway
-      - authcommand
-      - authquery
-
   gateway:
     build:
       context: ./apis/gateway
-      target: production
     env_file: .env
     volumes:
-      - ./api:/api
+      - ./apis:/api
     ports:
-      - "5001:3000"
+      - "5001:8080"
     depends_on:
       - authcommand
-      - authquery
 
   authcommand:
-    container_name: authCommand
+    container_name: authcommand
     build:
       context: ./apis/authCommand
-      target: production
     env_file: .env
-    volumes:
-      - ./api:/api
-    ports:
-      - 8081:3000
     depends_on:
-      - mongodb
-    networks:
-      - voltride
+      - "mongodb"
+    environment:
+      - NODE_ENV=production
 
-  authquery:
-    container_name: authQuery
-    build:
-      context: ./apis/authQuery
-      target: production
-    env_file: .env
-    volumes:
-      - ./api:/api
-    ports:
-      - 8082:3000
-    depends_on:
-      - mongodb
-    networks:
-      - voltride
+  # authquery:
+    # container_name: authQuery
+    # build:
+    #   context: ./apis/authQuery
+    # env_file: .env
+    # volumes:
+    #   - ./apis:/api
+    # ports:
+    #   - 8082:3000
+    # depends_on:
+    #   - mongodb
 
   # MaintenanceCommand:
     # container_name: MaintenanceCommand
