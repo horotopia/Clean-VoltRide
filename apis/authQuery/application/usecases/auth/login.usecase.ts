@@ -1,15 +1,15 @@
-import { UserRepositoryInterface } from "../../ports"
-import { AuthServiceInterface } from "../../ports";
+import { UserRepositoryInterface, AuthServiceInterface } from "../../ports";
 import { LoginUserDTO } from "../../dtos/auth";
-import { TokenHelper } from "../../../shared/helpers/token.helper";
 import { BadRequestError, NotFoundError } from "../../errors";
 
 export class LoginUseCase {
-
   private userRepository: UserRepositoryInterface;
   private authService: AuthServiceInterface;
 
-  constructor(userRepository: UserRepositoryInterface, authService: AuthServiceInterface) {
+  constructor(
+    userRepository: UserRepositoryInterface,
+    authService: AuthServiceInterface,
+  ) {
     this.userRepository = userRepository;
     this.authService = authService;
   }

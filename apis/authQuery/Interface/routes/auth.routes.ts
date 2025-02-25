@@ -4,6 +4,8 @@ import { SignInController } from "../controllers/auth/sign-in.controller";
 const router = express.Router();
 
 const signInController = new SignInController();
-router.post("/login", signInController.login.bind(signInController));
+router.post("/login", async (req, res, next) => {
+  await signInController.login(req, res);
+});
 
 export default router;

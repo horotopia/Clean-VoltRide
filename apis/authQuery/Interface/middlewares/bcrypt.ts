@@ -1,5 +1,5 @@
-import bcrypt from "bcryptjs";
-import { Logger } from "../config/logger";
+import bcrypt from "bcrypt";
+import { Logger } from "../../config/logger";
 
 const logger = Logger.get();
 

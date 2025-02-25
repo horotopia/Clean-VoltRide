@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { Logger } from "../config/logger";
+import { Logger } from "../../config/logger";
 
 config();
 const logger = Logger.get();
@@ -21,7 +21,7 @@ const generateToken = (user: any) => {
       role: user.role,
     },
     SECRET_KEY,
-    { expiresIn: "1d" }
+    { expiresIn: "1d" },
   );
 };
 

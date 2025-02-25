@@ -9,10 +9,9 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "strict": true,
-    "declaration": true
+    "declaration": true,
+    "declarationDir": "./types"
   },
-  "exclude": ["node_modules"],
-  "typeRoots": [
-    "node_modules/@types"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.d.ts"],
+  "typeRoots": ["node_modules/@types"]
 }

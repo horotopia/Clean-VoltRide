@@ -1,7 +1,6 @@
-import { DefaultApplicationError } from './default-application-error';
+import { DefaultApplicationError } from "./default-application-error";
 
 export class BadRequestError extends DefaultApplicationError {
-  name = 'BadRequestError';
+  name = "BadRequestError";
   statusCode = 400;
 }
- 

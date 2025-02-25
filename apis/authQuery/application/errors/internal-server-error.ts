@@ -1,6 +1,6 @@
-import { DefaultApplicationError } from './default-application-error';
+import { DefaultApplicationError } from ".";
 
 export class InternalServerError extends DefaultApplicationError {
-  name = 'InternalServerError';
+  name = "InternalServerError";
   statusCode = 500;
 }

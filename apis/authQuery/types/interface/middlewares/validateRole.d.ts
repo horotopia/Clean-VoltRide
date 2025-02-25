@@ -1,0 +1,10 @@
+import { Request, Response, NextFunction } from "express";
+import { Role } from "../models";
+export declare const validateRole: (req: Request, res: Response, next: NextFunction, role: Role[]) => Promise<void>;
+export declare const validateRoleAdmin: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleOwner: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleCustomer: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleAdminOwner: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleAdminCustomer: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleOwnerCustomer: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const validateRoleAll: (req: Request, res: Response, next: NextFunction) => Promise<void>;

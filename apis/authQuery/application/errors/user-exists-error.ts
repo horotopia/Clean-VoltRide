@@ -1,6 +1,6 @@
-import { DefaultApplicationError } from './default-application-error';
+import { DefaultApplicationError } from ".";
 
 export class UserExistsError extends DefaultApplicationError {
   statusCode = 409;
-  name = 'UserExistsError';
+  name = "UserExistsError";
 }
