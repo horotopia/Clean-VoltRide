@@ -48,7 +48,7 @@ export const userSchema = new Schema<User>(
     role: {
       type: String,
       enum: Object.values(Role),
-      default: Role.Customer,
+      default: Role.CUSTOMER,
     },
   },
   {

@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { UserRepositoryInterface } from "../../../application/ports";
 import { User } from "../../../domain/entities";
-import { userSchema } from "../../orm/mongoose";
+import { userSchema } from "../../orms/mongoose";
 import { MongooseService } from "../../databases";
 
 export class UserRepository implements UserRepositoryInterface {
@@ -32,8 +32,10 @@ export class UserRepository implements UserRepositoryInterface {
 
   // TODO: Implement the update method & Cie
   async update(user: User): Promise<User> {
-    const userData = await this.model.findByIdAndUpdate
-    (user.id, { email: user.email, password: user.password, role: user.role }, { new: true });
+    const userData = await this.model.findByIdAndUpdate(user.id, { email: user.email, password: user.password, role: user.role }, { new: true });
+    if (!userData) {
+      throw new Error("User not found");
+    }
     return new User(userData.email, userData.id);
   }
   async updateRole(id: string, password: string): Promise<User> {

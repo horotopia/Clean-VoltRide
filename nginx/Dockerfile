@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:alpine3.21
 
 RUN rm /etc/nginx/nginx.conf
 
