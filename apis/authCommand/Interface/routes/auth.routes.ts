@@ -4,7 +4,9 @@ import { SignUpController } from "../controllers/auth/sign-up.controller";
 const router = express.Router();
 
 const signUpController = new SignUpController();
-router.post("/register", signUpController.register.bind(signUpController));
+router.post("/register", async (req, res, next) => {
+    await signUpController.register(req, res);
+});
 // router.post("/change-password", AuthController.changePassword);
 // router.put("/update", AuthController.update);
 // router.put("/update-role", AuthController.updateRole);
