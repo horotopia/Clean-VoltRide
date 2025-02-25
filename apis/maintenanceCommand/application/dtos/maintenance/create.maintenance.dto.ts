@@ -7,5 +7,5 @@ export interface CreateMaintenanceDTO {
   date: Date;
   details: string;
   cost: number;
-  token: string;
+  id: string;
 }

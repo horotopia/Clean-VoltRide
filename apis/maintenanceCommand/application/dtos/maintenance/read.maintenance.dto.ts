@@ -1,3 +1,3 @@
 export interface ReadMaintenanceDTO {
-  scooterId: string;
+  id: string;
 }

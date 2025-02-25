@@ -1,8 +1,6 @@
-import { MaintenanceType } from '../../../domain/enums';
+import { MaintenanceType } from "../../../domain/enums";
 
 export interface UpdateMaintenanceDTO {
-  id: string;
-  token: string;
   scooterId?: string;
   technicianId?: string;
   type?: MaintenanceType;
