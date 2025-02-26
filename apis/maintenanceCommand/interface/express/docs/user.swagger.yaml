@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+  description: API for managing users
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: The user's email
+                password:
+                  type: string
+                  description: The user's password
+      responses:
+        '201':
+          description: The created user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT authentication token
+        '400':
+          description: Email and password are required
+        '409':
+          description: Email already exists
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - email
+        - password
+        - role
+      properties:
+        id:
+          type: string
+          description: The user ID
+        email:
+          type: string
+          description: L'email de l'utilisateur
+        password:
+          type: string
+          description: Le mot de passe de l'utilisateur
+        role:
+          type: string
+          enum: [ROLE_USER, ROLE_STORE_KEEPER, ROLE_ADMIN, ROLE_COMPTA]
+          default: ROLE_USER
+          description: Le rôle de l'utilisateur
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp of creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp of last update
+      example:
+        email: john.doe@toto.com
+        password: password
+        role: ROLE_USER
