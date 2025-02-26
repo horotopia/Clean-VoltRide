@@ -1,14 +1,19 @@
-import { Scooter } from "../../../domain/entities";
-import { ScooterRepositoryInterface, NotificationServiceInterface } from "../../ports";
+import { Scooter } from "../../../domain/Entities";
+import {
+  ScooterRepositoryInterface,
+  NotificationServiceInterface,
+} from "../../ports";
 
 export class NotificationMaintenanceUseCase {
-
   private scooterRepo: ScooterRepositoryInterface;
   private notificationService: NotificationServiceInterface;
 
-  constructor(scooterRepo: ScooterRepositoryInterface, notificationService: NotificationServiceInterface) {
+  constructor(
+    scooterRepo: ScooterRepositoryInterface,
+    notificationService: NotificationServiceInterface,
+  ) {
     this.scooterRepo = scooterRepo;
-    this.notificationService = notificationService
+    this.notificationService = notificationService;
   }
 
   async execute(scooterId: string): Promise<void> {
@@ -20,7 +25,10 @@ export class NotificationMaintenanceUseCase {
     if (scooter.model === "City 45" && scooter.chargeCycles >= 50) {
       message = `🚨 Maintenance requise pour le scooter ${scooterId} : Vérification de la batterie après 50 cycles.`;
     }
-    if (scooter.model === "Pro 60" && this.isSixMonthsSinceLastMaintenance(scooter)) {
+    if (
+      scooter.model === "Pro 60" &&
+      this.isSixMonthsSinceLastMaintenance(scooter)
+    ) {
       message = `🚨 Maintenance requise pour le scooter ${scooterId} : Révision technique après 6 mois.`;
     }
 

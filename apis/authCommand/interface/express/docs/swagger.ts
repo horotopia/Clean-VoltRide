@@ -60,13 +60,16 @@ const swaggerOptions: SwaggerOptions = {
       },
     ],
   },
-  apis: ["src/controllers/*.ts", "src/services/mongoose/schema/*.ts"],
+  apis: [
+    "apis/authCommand/infrastructure/orms/mongoose/*.ts",
+    "apis/authCommand/interface/controllers/auth/*.ts",
+  ],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 if (!swaggerSpec) {
   throw new Error(
-    "Erreur lors de la configuration de Swagger : swaggerSpec est undefined."
+    "Erreur lors de la configuration de Swagger : swaggerSpec est undefined.",
   );
 }
 

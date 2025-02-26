@@ -1,12 +1,12 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import configureCORS from "./config/cors";
 import configureHelmet from "./config/helmet";
-import swaggerSpec from "./interface/docs/swagger";
+import swaggerSpec from "./docs/swagger";
 import swaggerUi from "swagger-ui-express";
 import { config } from "dotenv";
 import { Logger } from "./config/logger";
-import errorHandler from "./interface/middlewares/errorHandler";
-import authRoutes from "./interface/routes/auth.routes";
+import errorHandler from "./middlewares/errorHandler";
+import authRoutes from "./routes/auth.routes";
 
 config();
 const app: Express = express();
@@ -20,19 +20,19 @@ const logger = Logger.get();
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (process.env.MODE_ENV === "development") {
     logger.http(
-      `${req.method} ${req.url} - ${req.ip} - ${req.headers["user-agent"]}`
+      `${req.method} ${req.url} - ${req.ip} - ${req.headers["user-agent"]}`,
     );
   }
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello, TypeScript Node Express!");
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello, TypeScript Node Express! Auth Command");
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 app.use(errorHandler());
 

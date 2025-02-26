@@ -1,15 +1,20 @@
-import { Maintenance, Scooter, Warranty } from '../../../domain/entities';
-import { MaintenanceType } from '../../../domain/enums';
-import { BadRequestError } from '../../../../authCommand/application/errors';
-import { MaintenanceRepositoryInterface, ScooterRepositoryInterface } from '../../ports';
-import { CreateMaintenanceDTO } from '../../dtos/maintenance';
+import { Maintenance, Scooter, Warranty } from "../../../domain/Entities";
+import { MaintenanceType } from "../../../domain/enums";
+import { BadRequestError } from "../../../../authCommand/application/errors";
+import {
+  MaintenanceRepositoryInterface,
+  ScooterRepositoryInterface,
+} from "../../ports";
+import { CreateMaintenanceDTO } from "../../dtos/maintenance";
 
 export class PlanifierMaintenanceUseCase {
-
   private scooterRepo: ScooterRepositoryInterface;
   private maintenanceRepo: MaintenanceRepositoryInterface;
 
-  constructor(scooterRepo: ScooterRepositoryInterface, maintenanceRepo: MaintenanceRepositoryInterface) {
+  constructor(
+    scooterRepo: ScooterRepositoryInterface,
+    maintenanceRepo: MaintenanceRepositoryInterface,
+  ) {
     this.scooterRepo = scooterRepo;
     this.maintenanceRepo = maintenanceRepo;
   }
@@ -30,7 +35,10 @@ export class PlanifierMaintenanceUseCase {
       needsMaintenance = true;
       details = "Vérification de la batterie après 50 cycles de charge.";
     }
-    if (scooter.model === "Pro 60" && this.isSixMonthsSinceLastMaintenance(scooter)) {
+    if (
+      scooter.model === "Pro 60" &&
+      this.isSixMonthsSinceLastMaintenance(scooter)
+    ) {
       needsMaintenance = true;
       details = "Révision technique après 6 mois.";
     }

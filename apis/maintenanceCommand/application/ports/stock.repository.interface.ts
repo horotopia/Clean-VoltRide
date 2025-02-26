@@ -1,4 +1,4 @@
-import { StockPiece } from '../../domain/entities';
+import { StockPiece } from "../../domain/Entities";
 
 export interface StockRepositoryInterface {
   findAll(): Promise<StockPiece[]>;

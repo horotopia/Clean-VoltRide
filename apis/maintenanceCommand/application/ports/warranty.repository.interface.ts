@@ -1,4 +1,4 @@
-import { Warranty } from '../../domain/entities';
+import { Warranty } from "../../domain/Entities";
 
 export interface WarrantyRepositoryInterface {
   findByScooterId(scooterId: string): Promise<Warranty | null>;

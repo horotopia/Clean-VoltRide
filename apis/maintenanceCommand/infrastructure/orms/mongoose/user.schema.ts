@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { User } from "../../../domain/entities";
+import { User } from "../../../domain/Entities";
 import { Role } from "../../../domain/enums";
 
 /**
@@ -55,5 +55,5 @@ export const userSchema = new Schema<User>(
     timestamps: true,
     collection: "users",
     versionKey: false,
-  }
+  },
 );

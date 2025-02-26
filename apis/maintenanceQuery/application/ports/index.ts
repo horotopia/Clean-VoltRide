@@ -1,4 +1,3 @@
-export * from './auth.service.interface';
 export * from './incident.repository.interface.ts';
 export * from './maintenance.repository.interface.ts';
 export * from './password.service.interface.ts';
@@ -8,4 +7,4 @@ export * from './scooter.repository.interface.ts';
 export * from './stock.repository.interface.ts';
 export * from './user.repository.interface';
 export * from './warranty.repository.interface.ts';
-export * from './notification.service.interface.ts';
+export * from './notification.service.interface';
